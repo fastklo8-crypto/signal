@@ -18,6 +18,13 @@ from data_providers.binance import top_usdt_symbols, get_klines
 from analyzer import make_dataframe, evaluate, pick_best, Signal
 from signal_formatter import to_text
 from chart import save_signal_chart
+from threading import Thread
+from keep_alive import app
+
+def run_web():
+    app.run(host="0.0.0.0", port=8080)
+
+Thread(target=run_web).start()
 
 JOB_KWARGS = {"misfire_grace_time": 600}
 
