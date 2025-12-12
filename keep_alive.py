@@ -1,11 +1,25 @@
-# keep_alive.py
 from flask import Flask
+import threading
+import time
 
-app = Flask(__name__)
+# Создаем минимальное Flask приложение для keep-alive
+flask_app = Flask(__name__)
 
-@app.route('/')
+@flask_app.route('/')
 def home():
-    return "OK"
+    return "Bot is alive!"
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+def run():
+    """Запускает Flask сервер в отдельном потоке"""
+    flask_app.run(host='0.0.0.0', port=8080)
+
+# Глобальная переменная для доступа к приложению
+app = flask_app
+
+# Функция для запуска в потоке (если нужно)
+def start_keep_alive():
+    """Запускает keep-alive сервер в отдельном потоке"""
+    thread = threading.Thread(target=run)
+    thread.daemon = True
+    thread.start()
+    return thread
