@@ -7,6 +7,11 @@ from config import BINANCE_API_BASE
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "tg-futures-signal-bot/1.0"})
 
+SESSION.proxies.update({
+    "http":  "http://195.158.8.123:3128",
+    "https": "http://195.158.8.123:3128",
+})
+
 def _get(url: str, params: Optional[dict] = None, retries: int = 3, timeout: int = 10):
     last_exc = None
     for _ in range(retries):
