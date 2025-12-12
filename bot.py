@@ -174,3 +174,9 @@ try:
     application = asyncio.run(setup_application())
 except Exception as e:
     logger.error(f"Failed to setup application: {e}")
+    raise
+if __name__ == "__main__":
+    if application:
+        application.run_polling()
+    else:
+        logger.error("Application not initialized. Exiting.")
